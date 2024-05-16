@@ -92,7 +92,7 @@ $today = get-date -f ("yyyyMMdd")
 write-host "Variable arrays created" -ForegroundColor Yellow
 
 write-host "Searching active directory for all server OU's named Moody AFB" -ForegroundColor DarkYellow
-$ouSearch = Get-ADOrganizationalUnit -Filter * -SearchBase "OU=Servers,DC=Area52,DC=AFNOAPPS,DC=USAF,DC=MIL" | Select-Object Name, DistinguishedName | where {$_.name -like "Moody AFB"}
+$ouSearch = Get-ADOrganizationalUnit -Filter * -SearchBase "OU=XXXX,DC=XXXXX,DC=XXXX,DC=XXXX,DC=XXX" | Select-Object Name, DistinguishedName | where {$_.name -like "XXXXX XXX"}
 write-host "Search Complete and stored in variable" -ForegroundColor Yellow
 
 write-host "Configuring array to store server names" -ForegroundColor DarkYellow
@@ -115,7 +115,7 @@ Write-Host "Array created with all server info" -ForegroundColor Yellow
 
 write-host "Searching Active Directory for all computers in Moody AFB Computers OU" -ForegroundColor DarkYellow
 
-$computerSearch = get-adcomputer -filter * -properties * -searchbase "OU=Moody AFB Computers, OU=Moody AFB,OU=AFCONUSEAST,OU=Bases,DC=Area52,DC=AFNOAPPS,DC=USAF,DC=MIL" | select-object DistinguishedName, Enabled, IPv4Address,LastLogonDate, Location, Name, o, OperatingSystem, OperatingSystemVersion
+$computerSearch = get-adcomputer -filter * -properties * -searchbase "OU=XXXX, OU=XXXX,OU=XXXXX,OU=XXXX,DC=XXXX,DC=XXXX,DC=XXXX,DC=XXXX" | select-object DistinguishedName, Enabled, IPv4Address,LastLogonDate, Location, Name, o, OperatingSystem, OperatingSystemVersion
 write-host "Active Directory search complete" -ForegroundColor Yellow
 
 write-host "Configuring array to store computer names" -ForegroundColor DarkYellow
@@ -139,13 +139,13 @@ foreach ($computer in $computerSearch){
 Write-Host "Array created with all computer info" -ForegroundColor Yellow
 
 write-host "Searching active directory for all OU's named Moody AFB" -ForegroundColor DarkYellow
-$ouAllSearch = Get-ADOrganizationalUnit -Filter * -SearchBase "OU=Administration,DC=Area52,DC=AFNOAPPS,DC=USAF,DC=MIL" | Select-Object Name, DistinguishedName, lastlogondate, enabled
+$ouAllSearch = Get-ADOrganizationalUnit -Filter * -SearchBase "OU=XXXX,DC=XXXX,DC=XXXX,DC=XXXX,DC=XXXX" | Select-Object Name, DistinguishedName, lastlogondate, enabled
 write-host "Search Complete and stored in variable" -ForegroundColor Yellow
 
 write-host "Configuring array to store account names" -ForegroundColor DarkYellow
 foreach ($ou in $ouAllSearch){
     $distinguishedName = $ou.DistinguishedName
-    $accountGroup = get-aduser -filter * -searchbase "$distinguishedName" | select-object DistinguishedName, Enabled, LastLogonDate, Name | where {$_.name -like "*qseu*"}
+    $accountGroup = get-aduser -filter * -searchbase "$distinguishedName" | select-object DistinguishedName, Enabled, LastLogonDate, Name | where {$_.name -like "*XXXX*"}
     foreach($account in $accountGroup){
         $accountName = $account.name
         $accounts += $accountName
